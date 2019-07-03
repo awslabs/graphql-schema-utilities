@@ -1,0 +1,38 @@
+[FEATURE | BUG | DOCS | CHORE] One liner succinctly describing the change (this line should be 60 characters or less total)
+
+# Describe the issue you are facing and how you solved it with the proposed changes.
+
+[TESTING]
+
+# How you tested this change. Please be specific!
+
+issue <ISSUE_URL>
+
+
+
+#
+#####################################################################
+#
+# EXAMPLE:
+#
+#####################################################################
+#
+# [FEATURE] Enable HTTP2 support in downloader module.
+#
+# I would like to use HTTP2 features to increase the performance of
+# my application.
+#
+# I updated the Downloader module to configure the HTTP client to use
+# HTTP 2 features.
+#
+# [TESTING]
+#
+# I tested this change with my application in the following scenarios:
+# * X
+# * Y
+# * Z
+#
+# I also implemented 2 new unit tests to specify the behavior of this
+# new feature
+#
+# issue https://github.com/awslabs/graphql-schema-validator/issues/13

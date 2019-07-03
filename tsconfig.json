@@ -1,0 +1,25 @@
+{
+  "compilerOptions": {
+    "target": "es6",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "sourceMap": true,
+    "declaration": true,
+    "noImplicitAny": false,
+    "lib": ["es2015", "esnext.asynciterable"],
+    "rootDir": "./src",
+    "outDir": "./dist",
+    "allowSyntheticDefaultImports": true,
+    "pretty": true,
+    "removeComments": true,
+    "types": [
+      "@types/graphql",
+      "@types/node"
+    ]
+  },
+  "exclude": [
+    "node_modules",
+    "dist",
+    "bin"
+  ]
+}
