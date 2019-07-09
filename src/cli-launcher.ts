@@ -5,20 +5,15 @@ This is the CLI tool to validate scripts against a schema.  It uses the API foun
 in the src/ directory to validate all the files in the file glob CLI parameter.
  */
 
-'use strict';
-
-'use strict';
-
-import chalk from 'chalk';
 import * as program from 'commander';
 import * as fs from 'fs';
 import * as graphql from 'graphql';
 import * as path from 'path';
 import * as cli from './cli';
-
-const json = JSON.parse(fs.readFileSync('package.json', 'utf8'));
+import { consoleLogger } from './logger';
+const packageJson = require('../package.json');
 program
-  .version(json.version)
+  .version(packageJson.version)
   .usage(`[options] (<glob.graphql>)`)
   .option('-o, --output [pattern]',
    'The file path where the merged schema will be outputted to.')
@@ -51,29 +46,28 @@ if (!program.schema) {
         ensureDirectoryExistence(program.output);
         fs.writeFile(program.output, data, (err) => {
           if (err) {
-            console.error(chalk.red('Error while copying the merged schema into the file. '), program.output, err);
+            consoleLogger.error('Error while copying the merged schema into the file. ', program.output, err);
             process.exit(1);
           } else {
-            console.log('Successfully written merged schema into a file.');
+            consoleLogger.log('Successfully written merged schema into a file.');
           }
         });
       }
       if (program.operations) {
         if (!program.rules) {
           cli.validateOperations(program.operations, schema).catch((error) => {
-            console.error(chalk.red('Operation files are not valid!'));
+            consoleLogger.error('Operation files are not valid!');
             process.exit(1);
           });
         } else {
           try {
             const setOfRules = require(`${program.rules}`);
             cli.validateOperations(program.operations, schema, setOfRules.specifiedRules).catch((error) => {
-              console.error(chalk.red('Operation files are not valid!\n'));
+              consoleLogger.error('Operation files are not valid!\n');
               process.exit(1);
             });
           } catch (err) {
-            console.error(chalk.
-              red(`Could not read ${chalk.yellow(program.rules)} for the custom validation rules. Exiting...`), err);
+            consoleLogger.error(`Could not read ${(program.rules)} for the custom validation rules. Exiting...`, err);
             process.exit(1);
           }
         }
@@ -81,7 +75,7 @@ if (!program.schema) {
     },
     )
     .catch((err) => {
-      console.error(chalk.red.bold('Could not merge Schema files!\n'));
+      consoleLogger.error('Could not merge Schema files!\n');
       process.exit(1);
     });
 }

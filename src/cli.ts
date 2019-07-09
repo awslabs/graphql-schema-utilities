@@ -15,7 +15,7 @@ import {
 import * as validator from './index';
 import { ValidationRule } from './types';
 import * as utils from './utilities';
-import { validateSchemaWithSourceMap } from './validateSchema';
+import { validateSchemaWithSourceMap } from './validate-schema';
 
 /**
  * Returns GraphQLSchema after merging the set of files from the Glob pattern.

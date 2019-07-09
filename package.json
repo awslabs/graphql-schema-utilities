@@ -6,10 +6,13 @@
     "url": "https://github.com/amzn/graphql-schema-tools"
   },
   "main": "dist/index.js",
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "clean": "rimraf coverage/ dist/ node_modules/",
     "build": "npm run lint && tsc",
-    "prepublishOnly": "tsc",
+    "prepack": "tsc",
     "build:watch": "tsc --watch",
     "lint": "tslint -c tslint.json 'src/**/*.ts'",
     "pretest": "npm run build",

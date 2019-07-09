@@ -6,6 +6,7 @@ import {
   makeExecutableSchema,
 } from 'graphql-tools';
 import * as validator from './index';
+import { consoleLogger } from './logger';
 
 /**
  * Validates the schema against Syntax and Semantics errors.
@@ -47,7 +48,7 @@ export const validateSchemaWithSourceMap = (
               listOfUnMappedErrors = popError(listOfUnMappedErrors, errorItem);
               if (locations) {
                 // Syntax error found. locations are only availble for syntax errors.
-                console.error('Location of errors: ', locations);
+                consoleLogger.error('Location of errors: ', locations);
               }
               const index = errorListClone.indexOf(allErrorsItem);
               if (index > -1) {
@@ -94,9 +95,9 @@ export const validateSchemaWithSourceMap = (
     if (errorCounter) {
       // Go over the list of unmapped errors if it is not empty then add new errors that source map could detect.
       listOfUnMappedErrors.forEach((errorItem) => {
-        console.error(`>> Error(${++errorCounter}): ${errorItem}.`);
+        consoleLogger.error(`>> Error(${++errorCounter}): ${errorItem}.`);
       });
-      console.log(
+      consoleLogger.log(
         `>> Total numbers of errors found: ${errorCounter +
           listOfUnMappedErrors.length}.`,
       );
@@ -124,11 +125,11 @@ function constructErrorMessage(
   errorItem: string,
   fileName: string,
 ): string {
-  const errorMessage = `>> Error(${errorCounter}): ${chalk.red(errorItem)} check the file:\n${chalk.blue.
+  const errorMessage = `>> Error(${errorCounter}): ${errorItem} check the file:\n${chalk.blue.
     underline(getFullPath(
     fileName,
   ))}`;
-  console.error(`${errorMessage}\n`);
+  consoleLogger.error(`${errorMessage}\n`);
   return errorMessage;
 }
 
