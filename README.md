@@ -36,7 +36,7 @@ Options:
 >> graphql-schema-tools -s "{./First_Directory/**/*.graphql,./Second_Directory/users/**/
 *.graphql}"
 ```
-That will merge all the schema files in both direcotries. Note that we are passing the directories as [Glob](https://github.com/isaacs/node-glob#readme). 
+That will merge all the schema files in both directories. Note that we are passing the directories as [Glob](https://github.com/isaacs/node-glob#readme). 
 
 ### How to validate your operations against your merged schema:
 ```sh
