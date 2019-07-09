@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "description": "Merge GraphQL Schema files and validate queries against the merged Schema",
   "repository": {
-    "url": "https://github.com/amzn/graphql-schema-tools"
+    "type": "git",
+    "url": "https://github.com/awslabs/graphql-schema-tools"
   },
   "main": "dist/index.js",
   "files": [
@@ -33,7 +34,8 @@
     "Schema stitching",
     "validate schema",
     "merge schema",
-    "validate graphql operations"
+    "validate graphql operations",
+    "graphql schema tools"
   ],
   "author": "Amazon",
   "license": "Apache-2.0",
