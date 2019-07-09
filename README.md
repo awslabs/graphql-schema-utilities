@@ -1,5 +1,6 @@
 # graphql-schema-utilities
 
+
 A CLI tool to merge schema files, and validate operations against a GraphQL Schema. 
 
 ## Installation
