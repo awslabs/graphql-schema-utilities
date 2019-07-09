@@ -1,13 +1,9 @@
 {
-	"extends": "tslint:recommended",
-	"rules": {
-		"no-console": false,
-    "quotemark": [
-      true,
-      "single",
-      "avoid-escape"
-    ],
+  "extends": "tslint:recommended",
+  "rules": {
+    "no-console": false,
+    "quotemark": [true, "single", "avoid-escape"],
     "no-var-keyword": true,
     "no-var-requires": false
-	}
+  }
 }

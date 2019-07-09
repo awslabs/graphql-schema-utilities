@@ -145,7 +145,6 @@ Install dependencies with
 
 ```sh
 npm install
-npm run typings
 ```
 
 ### Build
