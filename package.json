@@ -1,10 +1,10 @@
 {
-  "name": "graphql-schema-tools",
+  "name": "graphql-schema-utilities",
   "version": "1.0.0",
   "description": "Merge GraphQL Schema files and validate queries against the merged Schema",
   "repository": {
     "type": "git",
-    "url": "https://github.com/awslabs/graphql-schema-tools"
+    "url": "https://github.com/awslabs/graphql-schema-utilities"
   },
   "main": "dist/index.js",
   "files": [
@@ -27,7 +27,7 @@
     "release:publish": "npm publish && git push --follow-tags"
   },
   "bin": {
-    "graphql-schema-tools": "./dist/cli-launcher.js"
+    "graphql-schema-utilities": "./dist/cli-launcher.js"
   },
   "keywords": [
     "GraphQL",
@@ -35,6 +35,7 @@
     "validate schema",
     "merge schema",
     "validate graphql operations",
+    "graphql schema utilities",
     "graphql schema tools"
   ],
   "author": "Amazon",
