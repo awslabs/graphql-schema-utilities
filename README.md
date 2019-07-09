@@ -23,12 +23,12 @@ The tool will first merge schema files and then validate the merged schema, thro
 
 ```
 Options:
-  -V, --version               output the version number
+  -V, --version               output the version number.
   -o, --output [pattern]      The file path where the merged schema will be outputted to.
-  -s, --schema [pattern]      Use a glob path that would define all of your schema files to merge them into a valid schema. (default: "")
-  -r, --rules [pattern]       The file path for your custom rules to validate your operations, and your merged schema. To learn abot how to write your custom rules:  (default: "")
-  -p, --operations [pattern]  Use a glob that that contains your graphql operation files to test against the merged schema file. (default: "")
-  -h, --help                  output usage information
+  -s, --schema [pattern]      Use a glob path that would define all of your schema files to merge them into a valid schema. (default: "").
+  -r, --rules [pattern]       The file path for your custom rules to validate your operations, and your merged schema. To learn abot how to write your custom rules: check the README.md file  (default: "").
+  -p, --operations [pattern]  Use a glob that that contains your graphql operation files to test against the merged schema file. (default: "").
+  -h, --help                  output usage information.
 ```
 
 ### How to merge the schema files:
@@ -169,4 +169,4 @@ Please help make this tool better. For more information take a look at [CONTRIBU
 [Apache 2.0](LICENSE)
 
 ## Notes
-Much of the implementations here are coming from the [graphql-validator](https://github.com/creditkarma/graphql-validator) that was developed by credit-karma.
+This package was created based on a fork from [graphql-validator](https://github.com/creditkarma/graphql-validator) that was developed by credit-karma.
