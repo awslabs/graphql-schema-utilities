@@ -46,7 +46,7 @@ That will merge all the schema files in both directories. Note that we are passi
 Note that the "./path_to_directory/operations/*.graphql" **operations path** is also using [Glob](https://github.com/isaacs/node-glob#readme). 
 
 ### How to add your custom validation rules:
-This tools will use the validation rules as defind in graphql-js [validation rules](https://github.com/graphql/graphql-js/tree/master/src/validation/rules). But you can create your own validation rule. Here is an example for custom validation rule against your operation which validates that your operation name must be prefixed with **Hawaii_** .
+These tools will use the validation rules as defined in graphql-js [validation rules](https://github.com/graphql/graphql-js/tree/master/src/validation/rules). But you can create your own validation rule. Here is an example for custom validation rule against your operation which validates that your operation name must be prefixed with **Hawaii_** .
 
 ```js
 ### file name: custom_rule.ts
