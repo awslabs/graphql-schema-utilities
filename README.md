@@ -1,4 +1,5 @@
-# graphql-schema-tools
+# graphql-schema-utilities
+
 
 A CLI tool to merge schema files, and validate operations against a GraphQL Schema. 
 
@@ -6,7 +7,7 @@ A CLI tool to merge schema files, and validate operations against a GraphQL Sche
 
 
 ```sh
-npm install -g graphql-schema-tools
+npm install -g graphql-schema-utilities
 ```
 
 # Usage
@@ -14,7 +15,7 @@ npm install -g graphql-schema-tools
 ## Using the CLI tool
 
 ```sh
->> graphql-schema-tools
+>> graphql-schema-utilities
 ```
 
 The tool will first merge schema files and then validate the merged schema, throwing errors if the schema isn't valid and exit with exit code 1.  If Schema is valid it will check each operation in the file glob by parsing the operation and validating it against the schema.  If errors are found, they will be displayed by file name and exit with exit code 1.
@@ -33,14 +34,14 @@ Options:
 
 ### How to merge the schema files:
 ```sh
->> graphql-schema-tools -s "{./First_Directory/**/*.graphql,./Second_Directory/users/**/
+>> graphql-schema-utilities -s "{./First_Directory/**/*.graphql,./Second_Directory/users/**/
 *.graphql}"
 ```
 That will merge all the schema files in both directories. Note that we are passing the directories as [Glob](https://github.com/isaacs/node-glob#readme). 
 
 ### How to validate your operations against your merged schema:
 ```sh
->> graphql-schema-tools -s "{./First_Directory/**/*.graphql,./Second_Directory/users/**/
+>> graphql-schema-utilities -s "{./First_Directory/**/*.graphql,./Second_Directory/users/**/
 *.graphql}" "./path_to_directory/operations/*.graphql"
 ```
 Note that the "./path_to_directory/operations/*.graphql" **operations path** is also using [Glob](https://github.com/isaacs/node-glob#readme). 
@@ -90,7 +91,7 @@ export function OperationNameStartsWithHawaii(
 Then run the CLI with the rules option: 
 
 ```sh
->> graphql-schema-tools -s "{./First_Directory/**/*.graphql,./Second_Directory/users/**/
+>> graphql-schema-utilities -s "{./First_Directory/**/*.graphql,./Second_Directory/users/**/
 *.graphql}" "./path_to_directory/operations/*.graphql" -r "path/to/custom_rule.js"
 ```
 **Note:**
@@ -111,7 +112,7 @@ To learn more about how to write your own custom validation rules against graphq
 This tool can be used as a library for a JS app as well. you can call the mergeSchemas async using Promise.
 
 ```js
-const tools = require('@amzn/graphql-schema-tools');
+const tools = require('graphql-schema-utilities');
 
 const glob = "{./First_Directory/**/*.graphql,./Second_Directory/users/**/
   *.graphql}"
