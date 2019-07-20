@@ -42,7 +42,7 @@ That will merge all the schema files in both directories. Note that we are passi
 ### How to validate your operations against your merged schema:
 ```sh
 >> graphql-schema-utilities -s "{./First_Directory/**/*.graphql,./Second_Directory/users/**/
-*.graphql}" "./path_to_directory/operations/*.graphql"
+*.graphql}" -p "./path_to_directory/operations/*.graphql"
 ```
 Note that the "./path_to_directory/operations/*.graphql" **operations path** is also using [Glob](https://github.com/isaacs/node-glob#readme). 
 
@@ -92,7 +92,7 @@ Then run the CLI with the rules option:
 
 ```sh
 >> graphql-schema-utilities -s "{./First_Directory/**/*.graphql,./Second_Directory/users/**/
-*.graphql}" "./path_to_directory/operations/*.graphql" -r "path/to/custom_rule.js"
+*.graphql}" -p "./path_to_directory/operations/*.graphql" -r "path/to/custom_rule.js"
 ```
 **Note:**
 
