@@ -25,7 +25,7 @@ program
     'The file path for your custom rules to validate your operations, and your merged schema.', '')
   .option('-p, --operations [pattern]',
     'Use a glob that that contains your graphql operation files to test against the merged schema file.', '')
-  .option('-d, --disableDirectives [pattern]',
+  .option('-d, --disableDirectives',
     'By default will merge the directives, unless this was set to true.', false)
   .parse(process.argv);
 
