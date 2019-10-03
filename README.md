@@ -29,6 +29,7 @@ Options:
   -s, --schema [pattern]      Use a glob path that would define all of your schema files to merge them into a valid schema. (default: "").
   -r, --rules [pattern]       The file path for your custom rules to validate your operations, and your merged schema. To learn abot how to write your custom rules: check the README.md file  (default: "").
   -p, --operations [pattern]  Use a glob that that contains your graphql operation files to test against the merged schema file. (default: "").
+  -d, --disableDirectives     By default will merge the directives, unless this was set to true.
   -h, --help                  output usage information.
 ```
 

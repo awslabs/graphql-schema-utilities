@@ -11,19 +11,22 @@ import * as graphql from 'graphql';
 import * as path from 'path';
 import * as cli from './cli';
 import { consoleLogger } from './logger';
+import { printSchemaWithDirectives } from './utilities';
 // @ts-ignore
 const packageJson = require('../package.json');
 program
   .version(packageJson.version)
   .usage(`[options] (<glob.graphql>)`)
   .option('-o, --output [pattern]',
-   'The file path where the merged schema will be outputted to.')
+    'The file path where the merged schema will be outputted to.')
   .option('-s, --schema [pattern]',
-   'Use a glob path that would define all of your schema files to merge them into a valid schema.', '')
+    'Use a glob path that would define all of your schema files to merge them into a valid schema.', '')
   .option('-r, --rules [pattern]',
-   'The file path for your custom rules to validate your operations, and your merged schema.', '')
+    'The file path for your custom rules to validate your operations, and your merged schema.', '')
   .option('-p, --operations [pattern]',
-   'Use a glob that that contains your graphql operation files to test against the merged schema file.', '')
+    'Use a glob that that contains your graphql operation files to test against the merged schema file.', '')
+  .option('-d, --disableDirectives',
+    'By default will merge the directives, unless this was set to true.', false)
   .parse(process.argv);
 
 if (!program.schema) {
@@ -31,7 +34,12 @@ if (!program.schema) {
 } else {
   cli.mergeGQLSchemas(program.schema)
     .then((schema) => {
-      let data = graphql.printSchema(schema);
+      let data = '';
+      if (program.disableDirectives) {
+        data = graphql.printSchema(schema);
+      } else {
+        data = printSchemaWithDirectives(schema);
+      }
       if (schema.getQueryType().toString() === 'Query' && (!schema.getMutationType()
         || schema.getMutationType().toString() === 'Mutation')
         && (!schema.getSubscriptionType()
@@ -74,7 +82,7 @@ if (!program.schema) {
         }
       }
     },
-    )
+  )
     .catch((err) => {
       consoleLogger.error('Could not merge Schema files!\n');
       process.exit(1);
