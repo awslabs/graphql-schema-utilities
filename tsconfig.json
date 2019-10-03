@@ -13,7 +13,6 @@
     "pretty": true,
     "removeComments": true,
     "types": [
-      "@types/graphql",
       "@types/node"
     ]
   },
