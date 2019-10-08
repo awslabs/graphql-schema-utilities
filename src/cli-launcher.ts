@@ -26,7 +26,7 @@ program
   .option('-p, --operations [pattern]',
     'Use a glob that that contains your graphql operation files to test against the merged schema file.', '')
   .option('-d, --disableDirectives',
-    'By default will merge the directives, unless this was set to true.', false)
+    'By default will NOT merge the directives, unless this was set to false.', true)
   .parse(process.argv);
 
 if (!program.schema) {
