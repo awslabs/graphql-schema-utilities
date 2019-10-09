@@ -11,18 +11,17 @@ import * as graphql from 'graphql';
 import * as path from 'path';
 import * as cli from './cli';
 import { consoleLogger } from './logger';
-import { printSchemaWithDirectives } from './utilities';
 // @ts-ignore
 const packageJson = require('../package.json');
 program
   .version(packageJson.version)
   .usage(`[options] (<glob.graphql>)`)
   .option('-o, --output [pattern]',
-    'The file path where the merged schema will be outputted to.')
+   'The file path where the merged schema will be outputted to.')
   .option('-s, --schema [pattern]',
-    'Use a glob path that would define all of your schema files to merge them into a valid schema.', '')
+   'Use a glob path that would define all of your schema files to merge them into a valid schema.', '')
   .option('-r, --rules [pattern]',
-    'The file path for your custom rules to validate your operations, and your merged schema.', '')
+   'The file path for your custom rules to validate your operations, and your merged schema.', '')
   .option('-p, --operations [pattern]',
     'Use a glob that that contains your graphql operation files to test against the merged schema file.', '')
   .option('-d, --includeDirectives',
@@ -82,7 +81,7 @@ if (!program.schema) {
         }
       }
     },
-  )
+    )
     .catch((err) => {
       consoleLogger.error('Could not merge Schema files!\n');
       process.exit(1);
