@@ -141,9 +141,6 @@ tools.mergeGQLSchemas('./schema/*.graphql').then((schema) => {
 
 *Note:* you must use quotes around each file glob or the utility will not work properly.
 
-## Known issues
-1- directives won't merge if you are using them under an `extend` type. When you set `disableDirectives` to `false`.
-
 ## Development
 
 Install dependencies with
