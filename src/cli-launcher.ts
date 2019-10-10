@@ -11,6 +11,7 @@ import * as graphql from 'graphql';
 import * as path from 'path';
 import * as cli from './cli';
 import { consoleLogger } from './logger';
+import { printSchemaWithDirectives } from './utilities';
 // @ts-ignore
 const packageJson = require('../package.json');
 program
