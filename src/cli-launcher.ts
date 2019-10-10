@@ -23,7 +23,9 @@ program
   .option('-r, --rules [pattern]',
    'The file path for your custom rules to validate your operations, and your merged schema.', '')
   .option('-p, --operations [pattern]',
-   'Use a glob that that contains your graphql operation files to test against the merged schema file.', '')
+    'Use a glob that that contains your graphql operation files to test against the merged schema file.', '')
+  .option('-d, --includeDirectives',
+    'By default will NOT merge the directives, unless you added this flag.', false)
   .parse(process.argv);
 
 if (!program.schema) {
@@ -31,7 +33,12 @@ if (!program.schema) {
 } else {
   cli.mergeGQLSchemas(program.schema)
     .then((schema) => {
-      let data = graphql.printSchema(schema);
+      let data = '';
+      if (program.includeDirectives) {
+        data = printSchemaWithDirectives(schema);
+      } else {
+        data = graphql.printSchema(schema);
+      }
       if (schema.getQueryType().toString() === 'Query' && (!schema.getMutationType()
         || schema.getMutationType().toString() === 'Mutation')
         && (!schema.getSubscriptionType()
