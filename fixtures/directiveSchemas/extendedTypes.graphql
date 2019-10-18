@@ -1,0 +1,4 @@
+extend type NestedFoo {
+  anotherAttribute: String! @multiArgAndType(stringArg: "string", booleanArg: true, intArg: 314, floatArg: 3.14) @noArg
+  oldAttribute: String! @deprecated(reason: "reason")
+}

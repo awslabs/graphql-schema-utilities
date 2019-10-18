@@ -1,0 +1,37 @@
+"""Input type for a hello person."""
+input HelloPersonInput {
+  """
+  The name to set as the default for the helloPerson query when no name is provided to the query.  See helloPerson query for
+  more details.
+  """
+  name: String!
+}
+
+"""A root type for mutations"""
+type Mutation {
+  """
+  Sets the default helloPerson details used if no person name is provided in the helloPerson query.
+  """
+  setDefaultHelloPerson(helloPersonInput: HelloPersonInput!): String!
+}
+
+"""A root type for queries"""
+type Query {
+  """The Hello World! query."""
+  helloWorld: String!
+
+  """
+  The Hello <Name>! query.  That is, says hello to whatever String "name" is set to.  Defaults to the currently stored
+  default name as set by the setDefaultHelloPerson mutation or "Hello Everyone!", if no default name has been set yet.
+  """
+  helloPerson(name: String): String!
+}
+
+"""A root type for subscriptions"""
+type Subscription {
+  """
+  The hello person default name subscription.  Subscribes to events related to the changing of the default hello person
+  name.
+  """
+  defaultHelloPersonChanged: String!
+}

@@ -1,0 +1,33 @@
+"""This directive demonstrates using multiple args with multiple types."""
+directive @multiArgAndType(stringArg: String!, booleanArg: Boolean!, intArg: Int!, floatArg: Float!) on ENUM_VALUE | FIELD_DEFINITION | OBJECT
+
+"""
+This directive demonstrates using no args. And using comment syntax instead
+"""
+directive @noArg on ENUM_VALUE | FIELD_DEFINITION | OBJECT
+
+"""This directive demonstrates null types."""
+directive @nullArg(stringArg: String) on ENUM_VALUE | FIELD_DEFINITION | INPUT_FIELD_DEFINITION | OBJECT
+
+enum Bar {
+  MORE
+  VALUES
+  EVERYONE
+}
+
+type Foo {
+  bar: String!
+  qux: Int!
+  nestedFoo: NestedFoo!
+}
+
+input Input {
+  field: String
+}
+
+type NestedFoo {
+  id: ID!
+  bar: Bar!
+  anotherAttribute: String!
+  oldAttribute: String! @deprecated(reason: "reason")
+}
