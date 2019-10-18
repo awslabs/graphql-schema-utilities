@@ -1,0 +1,20 @@
+type Foo @noArg {
+  bar: String!
+  qux: Int!
+  nestedFoo: NestedFoo! @nullArg(stringArg: null)
+}
+
+type NestedFoo {
+  id: ID!
+  bar: Bar!
+}
+
+enum Bar {
+  MORE @multiArgAndType(stringArg: "string", booleanArg: true, intArg: 314, floatArg: 3.14)
+  VALUES
+  EVERYONE
+}
+
+input Input {
+  field: String @nullArg(stringArg: "string")
+}

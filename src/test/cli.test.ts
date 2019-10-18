@@ -11,7 +11,6 @@ import * as graphql from 'graphql';
 import * as mkdirp from 'mkdirp';
 import * as rimraf from 'rimraf';
 import * as cli from '../cli';
-import * as srcmap from '../validate-schema';
 
 describe('GraphQL Validator CLI', () => {
   describe('#mergeGQLSchemas', () => {

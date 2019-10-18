@@ -7,11 +7,10 @@ in the src/ directory to validate all the files in the file glob CLI parameter.
 
 import * as program from 'commander';
 import * as fs from 'fs';
-import * as graphql from 'graphql';
 import * as path from 'path';
 import * as cli from './cli';
 import { consoleLogger } from './logger';
-import { printSchemaWithDirectives } from './utilities';
+import { printSchemaDefault, printSchemaWithDirectives } from './printers';
 // @ts-ignore
 const packageJson = require('../package.json');
 program
@@ -38,7 +37,7 @@ if (!program.schema) {
       if (program.includeDirectives) {
         data = printSchemaWithDirectives(schema);
       } else {
-        data = graphql.printSchema(schema);
+        data = printSchemaDefault(schema);
       }
       if (schema.getQueryType().toString() === 'Query' && (!schema.getMutationType()
         || schema.getMutationType().toString() === 'Mutation')
