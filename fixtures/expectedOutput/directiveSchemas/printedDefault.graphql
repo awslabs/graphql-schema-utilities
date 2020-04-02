@@ -1,5 +1,5 @@
 """This directive demonstrates using multiple args with multiple types."""
-directive @multiArgAndType(stringArg: String!, booleanArg: Boolean!, intArg: Int!, floatArg: Float!) on ENUM_VALUE | FIELD_DEFINITION | OBJECT
+directive @multiArgAndType(stringArg: String!, booleanArg: Boolean!, intArg: Int!, floatArg: Float!, listArg: [String!]!) on ENUM_VALUE | FIELD_DEFINITION | OBJECT
 
 """
 This directive demonstrates using no args. And using comment syntax instead
