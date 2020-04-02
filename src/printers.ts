@@ -22,6 +22,7 @@ import {
     isSpecifiedDirective,
     isSpecifiedScalarType,
     isUnionType,
+    ListValueNode,
     NullValueNode,
     print,
     printSchema,
@@ -353,6 +354,9 @@ function printArgumentValueNode(type: ValueNode) {
 
         case 'StringValue':
             return printStringValueNode(type as StringValueNode);
+
+        case 'ListValue':
+            return printListValueNode(type as ListValueNode);
     }
 
     throw Error('Cannot print complex directive of type: ' + String(type.kind));
@@ -368,6 +372,10 @@ function printStringValueNode(node: StringValueNode) {
 
 function printNullValueNode(node: NullValueNode) {
     return null;
+}
+
+function printListValueNode(node: ListValueNode) {
+    return '[' + node.values.map(printArgumentValueNode).join(', ') + ']';
 }
 
 function descriptionLines(description: string, maxLen: number): string[] {
