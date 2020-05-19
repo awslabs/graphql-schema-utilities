@@ -2,6 +2,7 @@ import {
     ArgumentNode,
     astFromValue,
     BooleanValueNode,
+    EnumValueNode,
     FloatValueNode,
     GraphQLDirective,
     GraphQLEnumType,
@@ -357,6 +358,9 @@ function printArgumentValueNode(type: ValueNode) {
 
         case 'ListValue':
             return printListValueNode(type as ListValueNode);
+
+        case 'EnumValue':
+            return printEnumValueNode(type as EnumValueNode);
     }
 
     throw Error('Cannot print complex directive of type: ' + String(type.kind));
@@ -376,6 +380,10 @@ function printNullValueNode(node: NullValueNode) {
 
 function printListValueNode(node: ListValueNode) {
     return '[' + node.values.map(printArgumentValueNode).join(', ') + ']';
+}
+
+function printEnumValueNode(node: EnumValueNode) {
+    return node.value;
 }
 
 function descriptionLines(description: string, maxLen: number): string[] {
