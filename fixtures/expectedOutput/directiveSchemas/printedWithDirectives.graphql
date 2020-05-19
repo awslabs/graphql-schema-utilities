@@ -1,5 +1,5 @@
 """This directive demonstrates using multiple args with multiple types."""
-directive @multiArgAndType(stringArg: String!, booleanArg: Boolean!, intArg: Int!, floatArg: Float!, listArg: [String!]!) on ENUM_VALUE | FIELD_DEFINITION | OBJECT
+directive @multiArgAndType(stringArg: String!, booleanArg: Boolean!, intArg: Int!, floatArg: Float!, listArg: [String!]!, enumArg: Bar) on ENUM_VALUE | FIELD_DEFINITION | OBJECT
 
 """
 This directive demonstrates using no args. And using comment syntax instead
@@ -10,7 +10,7 @@ directive @noArg on ENUM_VALUE | FIELD_DEFINITION | OBJECT
 directive @nullArg(stringArg: String) on ENUM_VALUE | FIELD_DEFINITION | INPUT_FIELD_DEFINITION | OBJECT
 
 enum Bar {
-  MORE @multiArgAndType(stringArg: "string", booleanArg: true, intArg: 314, floatArg: 3.14, listArg: ["string"])
+  MORE @multiArgAndType(stringArg: "string", booleanArg: true, intArg: 314, floatArg: 3.14, listArg: ["string"], enumArg: VALUES)
   VALUES
   EVERYONE
 }
@@ -28,6 +28,6 @@ input Input {
 type NestedFoo {
   id: ID!
   bar: Bar!
-  anotherAttribute: String! @multiArgAndType(stringArg: "string", booleanArg: true, intArg: 314, floatArg: 3.14, listArg: ["string"]) @noArg
+  anotherAttribute: String! @multiArgAndType(stringArg: "string", booleanArg: true, intArg: 314, floatArg: 3.14, listArg: ["string"], enumArg: VALUES) @noArg
   oldAttribute: String! @deprecated(reason: "reason")
 }
