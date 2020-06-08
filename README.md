@@ -20,6 +20,57 @@ npm install -g graphql-schema-utilities
 
 The tool will first merge schema files and then validate the merged schema, throwing errors if the schema isn't valid and exit with exit code 1.  If Schema is valid it will check each operation in the file glob by parsing the operation and validating it against the schema.  If errors are found, they will be displayed by file name and exit with exit code 1.
 
+### Merging schema files
+You can merge your schema files across different modules and directories. In this example, you have three different set of files in three different directories:
+
+```
+~/moduleMain/schemas/Root.graphql:
+type Query;
+
+~/module1/schemas/Book.graphql:
+extend type Query {
+  bookById(id: ID!): Book
+}
+    
+type Book {
+  id: ID!
+  authorId: ID!
+}
+ 
+~/module2/schemas/User.graphql:
+extend type Query {
+  userById(id: ID!): User
+}
+    
+type User {
+  id: ID!
+  name: String!
+}
+
+```
+
+Running the CLI utility generates the merged schema file, Merged_schema.graphQL:
+
+```
+
+type Query {
+   userById(id: ID!): User
+   bookById(id: ID!): Book
+ }
+ 
+ type User {
+   id: ID!
+   name: String!
+ }
+ 
+ type Book {
+   id: ID!
+   authorId: ID!
+ }
+
+```
+
+
 ### The CLI options:
 
 ```
