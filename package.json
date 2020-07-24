@@ -1,6 +1,6 @@
 {
   "name": "graphql-schema-utilities",
-  "version": "1.1.2",
+  "version": "1.1.3",
   "description": "Merge GraphQL Schema files and validate queries against the merged Schema",
   "repository": {
     "type": "git",

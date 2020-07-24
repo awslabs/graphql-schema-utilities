@@ -7,24 +7,134 @@ const it = lab.it;
 const before = lab.before;
 
 import * as fs from 'fs';
-import * as glob from 'glob';
+import * as globUtil from 'glob';
 import * as graphql from 'graphql';
 import * as mkdirp from 'mkdirp';
 import * as rimraf from 'rimraf';
 import { mergeGQLSchemas } from '../cli';
-import * as validator from '../index';
+import * as schemaUtilities from '../index';
 
 describe('GraphQL Validator', () => {
-  let schema: graphql.GraphQLSchema;
+
+  describe('#mergeGQLSchemas', () => {
+    describe('when loading a schema glob', () => {
+      const glob = './fixtures/schema/**/*.graphql';
+      let schema;
+      before((done) => {
+        schemaUtilities.mergeGQLSchemas(glob).then((s) => {
+          schema = s;
+          done();
+        });
+      });
+
+      it('expect schema to be a graphql schema', (done) => {
+        expect(schema).to.exist();
+        expect(schema).to.be.an.instanceof(graphql.GraphQLSchema);
+        done();
+      });
+    });
+
+    describe(`When merging schema files with duplicate types.`, () => {
+      const glob = './fixtures/invalidSchemas/**/*.graphql';
+      let err;
+      before((done) => {
+        schemaUtilities.mergeGQLSchemas(glob).catch((e) => {
+          err = e;
+          done();
+        },
+        );
+      });
+
+      it('schema wont merge when having duplicate types', (done) => {
+        expect(err).to.exist();
+        done();
+      });
+    });
+  });
+
+  describe(`when loading an invalid glob`, () => {
+    const glob = './fixtures/not/an/existing/path';
+    let errs;
+    schemaUtilities.mergeGQLSchemas(glob).catch((e) => {
+        errs = e;
+      });
+
+    it('expect error to exist', (done) => {
+      expect(errs).to.exist();
+      done();
+    });
+  });
+
+  describe('#validateQueries', () => {
+    let schema: graphql.GraphQLSchema;
+    before(() => schemaUtilities.mergeGQLSchemas('./fixtures/schema/**/*.graphql').then((r) => schema = r));
+
+    describe('when validating a query glob', () => {
+      let results;
+      const glob = './fixtures/queries/*.graphql';
+      before((done) => {
+        schemaUtilities.validateOperations(glob, schema).then((r) => {
+          results = r;
+          done();
+        });
+      });
+
+      it('expect results to be empty', (done) => {
+        expect(results).to.be.undefined();
+        done();
+      });
+    });
+
+    describe('when validating a query glob with invalid queries', () => {
+      let errs;
+      const glob = './fixtures/queries/**/*.graphql';
+      before((done) => {
+        schemaUtilities.validateOperations(glob, schema).catch((e) => {
+          errs = e;
+          done();
+        });
+      });
+
+      it('expect validation results to exist', (done) => {
+        expect(errs).to.be.an.array();
+        expect(errs.length).to.equal(1);
+        done();
+      });
+    });
+
+    describe('when validating a glob with unreadable files', () => {
+      const root = './fixtures/queries/unreadable';
+      const glob = `${root}/*.graphql`;
+      let errs;
+      before((done) => {
+        mkdirp(root, () => {
+          fs.writeFile(`${root}/operation.graphql`, 'hello', { mode: '333' }, (err) => {
+            schemaUtilities.validateOperations(glob, schema).catch((e) => {
+              errs = e;
+              rimraf(root, done);
+            });
+          });
+        });
+      });
+
+      it('expect error to exist', (done) => {
+        expect(errs).to.exist();
+        expect(errs.length).to.equal(1);
+        done();
+      });
+    });
+  });
+
+  let graphqlSchema: graphql.GraphQLSchema;
   before(() =>
-    mergeGQLSchemas('./fixtures/schema/**/*.graphql').then((r) => (schema = r)),
+    mergeGQLSchemas('./fixtures/schema/**/*.graphql').then((r) => (graphqlSchema = r)),
   );
 
   describe('when validating a valid query', () => {
     let results;
     before((done) => {
       const query = graphql.parse(`{allPeople{name}}`);
-      results = validator.validateQuery(schema, query);
+      results = schemaUtilities.validateQuery(graphqlSchema, query);
       done();
     });
 
@@ -39,7 +149,7 @@ describe('GraphQL Validator', () => {
     let results;
     before((done) => {
       const query = graphql.parse(`{allPeople{anInvalidFieldName}}`);
-      results = validator.validateQuery(schema, query);
+      results = schemaUtilities.validateQuery(graphqlSchema, query);
       done();
     });
 
@@ -56,9 +166,9 @@ describe('GraphQL Validator', () => {
       let results;
       let cbResults;
       before((done) => {
-        validator.loadQueryFiles(gqlGlob).then((r) => {
+        schemaUtilities.loadQueryFiles(gqlGlob).then((r) => {
           results = r;
-          validator.loadQueryFiles(gqlGlob, (err, cbr) => {
+          schemaUtilities.loadQueryFiles(gqlGlob, (err, cbr) => {
             cbResults = cbr;
             done();
           });
@@ -80,9 +190,9 @@ describe('GraphQL Validator', () => {
       let results;
       let cbResults;
       before((done) => {
-        validator.loadQueryFiles(gqlGlob).then((r) => {
+        schemaUtilities.loadQueryFiles(gqlGlob).then((r) => {
           results = r;
-          validator.loadQueryFiles(gqlGlob, (err, cbr) => {
+          schemaUtilities.loadQueryFiles(gqlGlob, (err, cbr) => {
             cbResults = cbr;
             done();
           });
@@ -106,9 +216,9 @@ describe('GraphQL Validator', () => {
       let cbResults;
       before((done) => {
         mkdirp(root, '333', () => {
-          validator.loadQueryFiles(gqlGlob).catch((r) => {
+          schemaUtilities.loadQueryFiles(gqlGlob).catch((r) => {
             results = r;
-            validator.loadQueryFiles(gqlGlob, (cbr) => {
+            schemaUtilities.loadQueryFiles(gqlGlob, (cbr) => {
               cbResults = cbr;
               rimraf(root, done);
             });
@@ -138,9 +248,9 @@ describe('GraphQL Validator', () => {
             'hello',
             { mode: 333 },
             (err) => {
-              validator.loadQueryFiles(gqlGlob).catch((r) => {
+              schemaUtilities.loadQueryFiles(gqlGlob).catch((r) => {
                 results = r;
-                validator.loadQueryFiles(gqlGlob, (cbr) => {
+                schemaUtilities.loadQueryFiles(gqlGlob, (cbr) => {
                   cbResults = cbr;
                   rimraf(root, done);
                 });
@@ -165,11 +275,11 @@ describe('GraphQL Validator', () => {
       let fileNames;
       let cbResults;
       before((done) => {
-        glob('./fixtures/queries/*.graphql', (_, files) => {
+        globUtil('./fixtures/queries/*.graphql', (_, files) => {
           fileNames = files;
-          validator.loadQueryFiles(files).then((r) => {
+          schemaUtilities.loadQueryFiles(files).then((r) => {
             results = r;
-            validator.loadQueryFiles(files, (err, cbr) => {
+            schemaUtilities.loadQueryFiles(files, (err, cbr) => {
               cbResults = cbr;
               done();
             });
@@ -192,10 +302,10 @@ describe('GraphQL Validator', () => {
     describe('when validating a query array', () => {
       let results;
       before(() => {
-        return validator
+        return schemaUtilities
           .loadQueryFiles('./fixtures/queries/*.graphql')
           .then((queries) => {
-            results = validator.validateQueries(queries, schema);
+            results = schemaUtilities.validateQueries(queries, graphqlSchema);
           });
       });
 
@@ -208,10 +318,10 @@ describe('GraphQL Validator', () => {
     describe('when validating a query array with invalid queries', () => {
       let results;
       before(() => {
-        return validator
+        return schemaUtilities
           .loadQueryFiles('./fixtures/queries/**/*.graphql')
           .then((queries) => {
-            results = validator.validateQueries(queries, schema);
+            results = schemaUtilities.validateQueries(queries, graphqlSchema);
           });
       });
 
@@ -226,9 +336,9 @@ describe('GraphQL Validator', () => {
       let results;
       let cbResults;
       before((done) => {
-        validator.validateQueryFiles(gqlGlob, schema).then((r) => {
+        schemaUtilities.validateQueryFiles(gqlGlob, graphqlSchema).then((r) => {
           results = r;
-          validator.validateQueryFiles(gqlGlob, schema, [], (err, cbr) => {
+          schemaUtilities.validateQueryFiles(gqlGlob, graphqlSchema, [], (err, cbr) => {
             cbResults = cbr;
             done();
           });
@@ -258,9 +368,9 @@ describe('GraphQL Validator', () => {
       let results;
       let cbResults;
       before((done) => {
-        validator.validateQueryFiles(gqlGlob, schema).catch((r) => {
+        schemaUtilities.validateQueryFiles(gqlGlob, graphqlSchema).catch((r) => {
           results = r;
-          validator.validateQueryFiles(gqlGlob, schema, [], (err, cbr) => {
+          schemaUtilities.validateQueryFiles(gqlGlob, graphqlSchema, [], (err, cbr) => {
             cbResults = cbr;
             done();
           });
@@ -286,9 +396,9 @@ describe('GraphQL Validator', () => {
             'hello',
             { mode: '333' },
             (err) => {
-              validator.validateQueryFiles(gqlGlob, schema).catch((r) => {
+              schemaUtilities.validateQueryFiles(gqlGlob, graphqlSchema).catch((r) => {
                 results = r;
-                validator.validateQueryFiles(gqlGlob, schema, [], (cbr) => {
+                schemaUtilities.validateQueryFiles(gqlGlob, graphqlSchema, [], (cbr) => {
                   cbResults = cbr;
                   rimraf(root, done);
                 });
