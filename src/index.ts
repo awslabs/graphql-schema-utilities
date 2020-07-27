@@ -12,6 +12,7 @@ import {
   ValidationRule,
 } from './types';
 import * as utils from './utilities';
+export { mergeGQLSchemas, validateOperations} from './cli';
 
 export interface IQueryFileError {
   file: string;
