@@ -83,7 +83,7 @@ if (!program.schema) {
     },
     )
     .catch((err) => {
-      consoleLogger.error('Could not merge Schema files!\n');
+      consoleLogger.error('Could not merge Schema files!\n', err);
       process.exit(1);
     });
 }
