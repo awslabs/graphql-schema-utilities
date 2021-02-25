@@ -26,6 +26,8 @@ program
     'Use a glob that that contains your graphql operation files to test against the merged schema file.', '')
   .option('-d, --includeDirectives',
     'By default will NOT merge the directives, unless you added this flag.', false)
+  .option('-q, --quiet',
+   'Run in quite mode, suppressing all logs except errors.', false)
   .parse(process.argv);
 
 if (!program.schema) {
@@ -49,7 +51,11 @@ if (!program.schema) {
               ? '\n  subscription: Subscription' : ''}  \n}\n\n`;
         data = typeDefs + data;
       }
-      process.stdout.write(data);
+
+      if (!program.quiet) {
+        process.stdout.write(data);
+      }
+
       if (program.output) {
         ensureDirectoryExistence(program.output);
         fs.writeFile(program.output, data, (err) => {
