@@ -9,6 +9,9 @@ directive @noArg on ENUM_VALUE | FIELD_DEFINITION | OBJECT
 """This directive demonstrates null types."""
 directive @nullArg(stringArg: String) on ENUM_VALUE | FIELD_DEFINITION | INPUT_FIELD_DEFINITION | OBJECT
 
+"""The directives decorates unions."""
+directive @nestedFooUnion on UNION
+
 enum Bar {
   MORE @multiArgAndType(stringArg: "string", booleanArg: true, intArg: 314, floatArg: 3.14, listArg: ["string"], enumArg: VALUES)
   VALUES
@@ -31,3 +34,5 @@ type NestedFoo {
   anotherAttribute: String! @multiArgAndType(stringArg: "string", booleanArg: true, intArg: 314, floatArg: 3.14, listArg: ["string"], enumArg: VALUES) @noArg
   oldAttribute: String! @deprecated(reason: "reason")
 }
+
+union NestedFooUnion @nestedFooUnion = NestedFoo
