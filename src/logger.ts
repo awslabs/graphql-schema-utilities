@@ -1,5 +1,7 @@
 import chalk from 'chalk';
 
+import * as program from 'commander';
+
 export interface ILogger {
   error(...args);
   warn(...args);
@@ -12,11 +14,15 @@ export class ConsoleLogger implements ILogger {
   }
 
   public log(message: string, ...args) {
-    console.log(message, args.length ? args : '');
+    if (!program.quiet) {
+      console.log(message, args.length ? args : '');
+    }
   }
 
   public warn(warnMessage: string, ...args) {
-    console.warn(chalk.yellow(warnMessage), args.length ? args : '');
+    if (!program.quiet) {
+      console.warn(chalk.yellow(warnMessage), args.length ? args : '');
+    }
   }
 }
 
