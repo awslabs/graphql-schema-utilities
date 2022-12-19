@@ -67,6 +67,6 @@
     "definition": "dist/index.d.ts"
   },
   "peerDependencies": {
-    "graphql": "^0.13.0 || ^14.0.0"
+    "graphql": "^0.13.0 || ^14.0.0 || ^15.0.0"
   }
 }
