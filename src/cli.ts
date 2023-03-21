@@ -9,10 +9,10 @@ import {
   printSchema,
 } from 'graphql';
 import {
-  buildSchemaFromTypeDefinitions,
   makeExecutableSchema,
 } from 'graphql-tools';
 import * as validator from './index';
+import { consoleLogger } from './logger';
 import { ValidationRule } from './types';
 import * as utils from './utilities';
 import { validateSchemaWithSourceMap } from './validate-schema';
@@ -24,11 +24,11 @@ import { validateSchemaWithSourceMap } from './validate-schema';
  */
 export function mergeGQLSchemas(schemaPattern: string): Promise<GraphQLSchema> {
   return new Promise((resolve, reject) => {
-    console.log(`\nLoading schema from ${schemaPattern}`);
+    consoleLogger.log(`\nLoading schema from ${schemaPattern}`);
     utils.readGlob(schemaPattern).then((files) => {
       if (!files.length) {
         const noFilesMatching = `No matching files were found with Glob: ${schemaPattern}.`;
-        console.error(noFilesMatching);
+        consoleLogger.error(noFilesMatching);
         reject(new Error(noFilesMatching));
       }
       Promise.all(
@@ -37,7 +37,7 @@ export function mergeGQLSchemas(schemaPattern: string): Promise<GraphQLSchema> {
             .readFile(file)
             .then((subSchema: string) => subSchema)
             .catch((error) => {
-              console.error(
+              consoleLogger.error(
                 `An error occurred while trying to read your graphql schemas in ${schemaPattern}. \n`,
                 error,
               );
@@ -71,25 +71,25 @@ export function validateOperations(
   rules?: ReadonlyArray<ValidationRule>,
 ): Promise<void> {
   return new Promise<void>((resolve, reject) => {
-    console.log(
+    consoleLogger.log(
       `\nValidating queries for ${queriesPattern} using loaded schema`,
     );
 
     function outputErrors(errs) {
-      console.log('\nErrors found:');
+      consoleLogger.log('\nErrors found:');
       errs.forEach((err) => {
-        console.log(`\nFile: ${err.file}`);
+        consoleLogger.log(`\nFile: ${err.file}`);
         err.errors.forEach((errStr) => {
-          console.log(`\t${errStr}`);
+          consoleLogger.log(`\t${errStr}`);
         });
       });
-      console.log('\n');
+      consoleLogger.log('\n');
     }
 
     validator
       .validateQueryFiles(queriesPattern, validSchema, rules)
       .then(() => {
-        console.log('All queries are valid\n');
+        consoleLogger.log('All queries are valid\n');
         resolve();
       })
       .catch((errs) => {
