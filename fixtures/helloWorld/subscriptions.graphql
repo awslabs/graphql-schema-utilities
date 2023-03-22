@@ -1,6 +1,8 @@
-# A root type for subscriptions
+"""A root type for subscriptions"""
 type Subscription {
-  #  The hello person default name subscription.  Subscribes to events related to the changing of the default hello person
-  #  name.
+  """
+  The hello person default name subscription.  Subscribes to events related to the changing of the default hello person
+  name.
+  """
   defaultHelloPersonChanged: String!
 }
