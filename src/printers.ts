@@ -31,6 +31,7 @@ import {
     ValueNode,
 } from 'graphql';
 import { printBlockString } from 'graphql/language/blockString';
+import flatMap from 'graphql/polyfills/flatMap';
 import objectValues from 'graphql/polyfills/objectValues';
 
 /**
@@ -387,20 +388,14 @@ function printEnumValueNode(node: EnumValueNode) {
 
 function descriptionLines(description: string, maxLen: number): string[] {
     const rawLines = description.split('\n');
-    const updatedLines = [];
-    for (const line of rawLines) {
+    return flatMap(rawLines, (line) => {
         if (line.length < maxLen + 5) {
-            updatedLines.push(line);
-        } else {
-            // For > 120 character long lines, cut at space boundaries into sublines
-            // of ~80 chars.
-            const brokenLines = breakLine(line, maxLen);
-            for (const brokenLine of brokenLines) {
-                updatedLines.push(brokenLine);
-            }
+            return line;
         }
-    }
-    return updatedLines;
+        // For > 120 character long lines, cut at space boundaries into sublines
+        // of ~80 chars.
+        return breakLine(line, maxLen);
+    });
 }
 
 function breakLine(line: string, maxLen: number): string[] {

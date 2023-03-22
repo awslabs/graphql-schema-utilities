@@ -2,6 +2,7 @@ import chalk from 'chalk';
 import * as fs from 'fs';
 import { GraphQLError, GraphQLSchema } from 'graphql';
 import {
+  buildSchemaFromTypeDefinitions,
   makeExecutableSchema,
 } from 'graphql-tools';
 import * as validator from './index';
