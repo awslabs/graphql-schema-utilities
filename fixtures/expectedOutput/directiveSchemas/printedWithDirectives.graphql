@@ -1,9 +1,6 @@
 """This directive demonstrates using multiple args with multiple types."""
 directive @multiArgAndType(stringArg: String!, booleanArg: Boolean!, intArg: Int!, floatArg: Float!, listArg: [String!]!, enumArg: Bar) on ENUM_VALUE | FIELD_DEFINITION | OBJECT
 
-"""
-This directive demonstrates using no args. And using comment syntax instead
-"""
 directive @noArg on ENUM_VALUE | FIELD_DEFINITION | OBJECT
 
 """This directive demonstrates null types."""
@@ -26,6 +23,7 @@ type Foo @noArg {
 
 input Input {
   field: String @nullArg(stringArg: "string")
+  oldAttribute: String! @deprecated(reason: "reason")
 }
 
 type NestedFoo {

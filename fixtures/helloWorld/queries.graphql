@@ -1,9 +1,11 @@
-# A root type for queries
+"""A root type for queries"""
 type Query {
-  #  The Hello World! query.
+  """The Hello World! query."""
   helloWorld: String!
 
-  #  The Hello <Name>! query.  That is, says hello to whatever String "name" is set to.  Defaults to the currently stored
-  #  default name as set by the setDefaultHelloPerson mutation or "Hello Everyone!", if no default name has been set yet.
+  """
+  The Hello <Name>! query.  That is, says hello to whatever String "name" is set to.  Defaults to the currently stored
+  default name as set by the setDefaultHelloPerson mutation or "Hello Everyone!", if no default name has been set yet.
+  """
   helloPerson(name: String): String!
 }

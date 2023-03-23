@@ -1,12 +1,14 @@
-# A root type for mutations
+"""A root type for mutations"""
 type Mutation {
-  # Sets the default helloPerson details used if no person name is provided in the helloPerson query.
+  """Sets the default helloPerson details used if no person name is provided in the helloPerson query."""
   setDefaultHelloPerson(helloPersonInput: HelloPersonInput!): String!
 }
 
-# Input type for a hello person.
+"""Input type for a hello person."""
 input HelloPersonInput {
-  # The name to set as the default for the helloPerson query when no name is provided to the query.  See helloPerson query for
-  # more details.
+  """
+  The name to set as the default for the helloPerson query when no name is provided to the query.  See helloPerson query for
+  more details.
+  """
   name: String!
 }
