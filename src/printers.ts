@@ -25,6 +25,7 @@ import {
     isUnionType,
     ListValueNode,
     NullValueNode,
+    ObjectValueNode,
     print,
     printSchema,
     StringValueNode,
@@ -360,6 +361,9 @@ function printArgumentValueNode(type: ValueNode) {
 
         case 'EnumValue':
             return printEnumValueNode(type as EnumValueNode);
+
+        case 'ObjectValue':
+            return printObjectValueNode(type as ObjectValueNode);
     }
 
     throw Error('Cannot print complex directive of type: ' + String(type.kind));
@@ -383,6 +387,14 @@ function printListValueNode(node: ListValueNode) {
 
 function printEnumValueNode(node: EnumValueNode) {
     return node.value;
+}
+
+function printObjectValueNode(node) {
+    return '{' + node.fields.map(printObjectField).join(', ') + '}';
+}
+
+function printObjectField(field) {
+    return field.name.value + ': ' + printArgumentValueNode(field.value);
 }
 
 function descriptionLines(description: string, maxLen: number): string[] {
