@@ -49,6 +49,25 @@ describe('GraphQL Schema Printers', () => {
                 done();
             });
         });
+
+        describe(`When loading and printing the custom input object in directive arguments.`, () => {
+            const glob = './fixtures/inputObjectInDirective/**/*.graphql';
+            let printedSchema: string;
+            before((done) => {
+                cli.mergeGQLSchemas(glob).then((s) => {
+                    printedSchema = printers.printSchemaWithDirectives(s);
+                    done();
+                });
+            });
+
+            it('Has symmetric equality preserving directives', (done) => {
+                expect(printedSchema).to.exist();
+                const expectedSchema: string = fs.readFileSync(
+                    './fixtures/expectedOutput/inputObjectInDirective/printedInputObject.graphql', 'utf8');
+                expect(printedSchema).to.equal(expectedSchema);
+                done();
+            });
+        });
     });
 
     describe('#printSchemaDefault', () => {

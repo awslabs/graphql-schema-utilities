@@ -1,0 +1,28 @@
+directive @color(colors: ColorInput) on OBJECT
+
+directive @horror on OBJECT
+
+type Book @horror {
+  id: ID
+  name: String
+}
+
+enum Color {
+  Red
+  Blue
+}
+
+input ColorInput {
+  color: Color
+  OR: [ColorInput]
+  AND: [ColorInput]
+}
+
+type Page @color(colors: {OR: [{color: Blue}, {color: Red}]}) {
+  id: ID
+  content: String
+}
+
+type Query {
+  book: Book
+}

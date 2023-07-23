@@ -1,0 +1,10 @@
+type Query {
+    book: Book
+}
+
+directive @horror on OBJECT
+
+type Book @horror {
+    id: ID
+    name: String
+}
