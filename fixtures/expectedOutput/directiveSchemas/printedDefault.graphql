@@ -9,7 +9,16 @@ directive @nullArg(stringArg: String) on ENUM_VALUE | FIELD_DEFINITION | INPUT_F
 """The directives decorates unions."""
 directive @nestedFooUnion on UNION
 
-type Foo {
+interface BarInterface {
+  bar: String!
+}
+
+interface FooInterface implements BarInterface {
+  bar: String!
+  nestedFoo: NestedFoo!
+}
+
+type Foo implements FooInterface {
   bar: String!
   qux: Int!
   nestedFoo: NestedFoo!

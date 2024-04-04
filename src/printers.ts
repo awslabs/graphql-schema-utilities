@@ -107,22 +107,28 @@ function printScalar(type: GraphQLScalarType): string {
     return printDescription(type) + `scalar ${type.name}`;
 }
 
-function printObject(type: GraphQLObjectType): string {
+
+function getImplementedInterfaces(type: GraphQLObjectType | GraphQLInterfaceType): string {
     const interfaces = type.getInterfaces();
     const implementedInterfaces = interfaces.length
         ? ' implements ' + interfaces.map((i) => i.name).join(' & ')
         : '';
-    return (
-        printDescription(type) +
-        `type ${type.name}${implementedInterfaces}` +
-        printFields(type)
-    );
+    return implementedInterfaces;
 }
 
 function printInterface(type: GraphQLInterfaceType): string {
+    const implementedInterfaces = getImplementedInterfaces(type);
     return (
         printDescription(type) +
-        `interface ${type.name}` +
+        `interface ${type.name}${implementedInterfaces}` +
+        printFields(type)
+    );
+}
+function printObject(type: GraphQLObjectType): string {
+    const implementedInterfaces = getImplementedInterfaces(type);
+    return (
+        printDescription(type) +
+        `type ${type.name}${implementedInterfaces}` +
         printFields(type)
     );
 }

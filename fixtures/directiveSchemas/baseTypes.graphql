@@ -1,4 +1,13 @@
-type Foo @noArg {
+interface BarInterface {
+  bar: String!
+}
+
+interface FooInterface implements BarInterface {
+  bar: String!
+  nestedFoo: NestedFoo! @nullArg(stringArg: null)
+}
+
+type Foo implements FooInterface @noArg {
   bar: String!
   qux: Int!
   nestedFoo: NestedFoo! @nullArg(stringArg: null)
