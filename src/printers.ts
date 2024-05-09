@@ -380,7 +380,7 @@ function printLiteralArgumentValueNode(node: IntValueNode | FloatValueNode | Boo
 }
 
 function printStringValueNode(node: StringValueNode) {
-    return '"' + node.value + '"';
+    return JSON.stringify(node.value);
 }
 
 function printNullValueNode(node: NullValueNode) {

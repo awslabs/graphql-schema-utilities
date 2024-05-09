@@ -27,4 +27,5 @@ enum Bar {
 input Input {
   field: String @nullArg(stringArg: "string")
   oldAttribute: String! @deprecated(reason: "reason")
+  fieldWithEscapeString: String @escapedStringArg(escapedString: "\b,\f,\n,\r,\t,...,\\,{,}")
 }

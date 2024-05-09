@@ -9,6 +9,9 @@ directive @nullArg(stringArg: String) on ENUM_VALUE | FIELD_DEFINITION | INPUT_F
 """The directives decorates unions."""
 directive @nestedFooUnion on UNION
 
+"""The directive accepts escaped string."""
+directive @escapedStringArg(escapedString: String) on ARGUMENT_DEFINITION | INPUT_FIELD_DEFINITION
+
 interface BarInterface {
   bar: String!
 }
@@ -40,6 +43,7 @@ enum Bar {
 input Input {
   field: String
   oldAttribute: String! @deprecated(reason: "reason")
+  fieldWithEscapeString: String
 }
 
 union NestedFooUnion = NestedFoo
