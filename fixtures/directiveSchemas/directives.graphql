@@ -10,3 +10,6 @@ directive @nullArg(stringArg: String) on ENUM_VALUE | FIELD_DEFINITION | INPUT_F
 """The directives decorates unions."""
 directive @nestedFooUnion on UNION
 union NestedFooUnion @nestedFooUnion = NestedFoo
+
+"""The directive accepts escaped string."""
+directive @escapedStringArg(escapedString: String) on ARGUMENT_DEFINITION | INPUT_FIELD_DEFINITION
